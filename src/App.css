@@ -1,0 +1,43 @@
+
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+  }
+
+  body{
+    background-color: black;
+    overflow: visible;
+  }
+  
+
+.customFont {
+  font-family: 'Emilys Candy', cursive;
+  font-size: 25px;
+  
+}
+
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nav-links {
+  text-decoration: none;
+}
+
+.nav-links .MuiIconButton-root{
+  color: rgba(255, 255, 255, 0.66) ;
+}
+
+
+.nav-links.active .MuiIconButton-root{
+  color: white;
+}
+
+
+
+
