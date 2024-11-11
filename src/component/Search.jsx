@@ -16,35 +16,38 @@ const Search = ({ isOpen, setSearchOpen }) => {
   const [searchValue, setSearchValue] = useState("");
   const location = useLocation();
 
+
   useEffect(() => {
     const fetchData = async () => {
-      
       if (searchValue) {
+        setIsLoading(true); 
+        
+        const apiKey = import.meta.env.VITE_API_KEY;
+        const apiUrl = `http://www.omdbapi.com/?s=${searchValue}&apikey=${apiKey}`;
+  
         try {
-          const response = await fetch(
-            `http://www.omdbapi.com/?s=${searchValue}&apikey=4e3728b8`
-          );
+          const response = await fetch(apiUrl);
           const data = await response.json();
           if (data.Search) {
             setMovies(data.Search);
-            
           } else {
             setMovies([]);
-           
+            console.log("No movies found for:", searchValue);
           }
         } catch (error) {
           console.error("Error fetching movies:", error);
-        } finally { 
+        } finally {
           setIsLoading(false); 
-        } 
-
-        
-      } else {
-        setMovies([]);
+        }
       }
     };
+  
     fetchData();
   }, [searchValue]);
+
+
+
+
 
   useEffect(() => {
     if (location.pathname !== "/search") {

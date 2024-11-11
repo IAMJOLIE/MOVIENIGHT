@@ -1,6 +1,6 @@
 
 
-import {BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './component/Home'
 
@@ -9,9 +9,8 @@ import NavComponent from './component/NavComponent'
 import MyList from './component/MyList'
 import Watched from './component/Warched'
 import { MovieProvider } from './component/ConText/MovieContext'
-import { Box } from '@mui/material'
-import NotFound from './component/NotFound'
 
+import NotFound from './component/NotFound'
 
 
 
@@ -25,7 +24,7 @@ function App() {
     <MovieProvider>
 
     
-   <Router>
+
     <NavComponent/>
     <Routes>
     
@@ -36,7 +35,7 @@ function App() {
     <Route path="/watched" element={<Watched />} />
     <Route path='*' element={<NotFound/>}/>
   </Routes>
-</Router>
+
 </MovieProvider>
 
   )

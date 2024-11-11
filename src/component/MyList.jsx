@@ -116,7 +116,7 @@ const MyList = () => {
               }}
             >
               <Typography sx={{ color: "text.secondary" }}>
-                No image found{" "}
+                No image found.
               </Typography>
             </Box>
             )}
@@ -201,7 +201,7 @@ const MyList = () => {
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
                   />
 
-                  <Typography
+                  <Typography 
                     py={1}
                     px={1}
                     sx={{
