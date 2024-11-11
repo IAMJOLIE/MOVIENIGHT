@@ -14,38 +14,49 @@ const Search = ({ isOpen, setSearchOpen }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [noMoviesFound, setNoMoviesFound] = useState(false);
+  const [error, setError] = useState(""); 
   const location = useLocation();
 
 
   useEffect(() => {
     const fetchData = async () => {
-      if (searchValue) {
-        setIsLoading(true); 
-        
-        const apiKey = import.meta.env.VITE_API_KEY;
-        const apiUrl = `http://www.omdbapi.com/?s=${searchValue}&apikey=${apiKey}`;
-  
-        try {
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-          if (data.Search) {
-            setMovies(data.Search);
-          } else {
-            setMovies([]);
-            console.log("No movies found for:", searchValue);
-          }
-        } catch (error) {
-          console.error("Error fetching movies:", error);
-        } finally {
-          setIsLoading(false); 
+        if (searchValue) {
+            console.log("API Key:", import.meta.env.VITE_API_KEY);
+            setIsLoading(true);
+            setNoMoviesFound(false);
+            setError("");
+
+            const apiKey = import.meta.env.VITE_API_KEY;
+            const apiUrl = `https://www.omdbapi.com/?s=${searchValue}&apikey=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.Error) {
+                    throw new Error(data.Error);
+                }
+                if (data.Search) {
+                    setMovies(data.Search);
+                } else {
+                    setMovies([]);
+                    setNoMoviesFound(true);
+                }
+
+              } catch (error) {
+                setError(error.message); // Sätter ett användbart felmeddelande
+                console.error("Error fetching movies:", error); // Loggar felet för utvecklingsändamål
+            } finally {
+                setIsLoading(false); // Stänger av laddningsindikatorn när anropet är klart
+            }
         }
-      }
     };
-  
+
     fetchData();
-  }, [searchValue]);
-
-
+}, [searchValue]);
 
 
 
