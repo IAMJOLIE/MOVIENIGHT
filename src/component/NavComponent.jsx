@@ -13,7 +13,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import MoodRoundedIcon from "@mui/icons-material/MoodRounded";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { buttonStyleM } from "../until/style";
@@ -23,6 +23,7 @@ const NavComponent = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
+  const menuRef = useRef(null)
 
   const nav = useNavigate();
 
@@ -35,6 +36,20 @@ const NavComponent = () => {
     setMenuOpen(false);
     nav(path);
   };
+
+  useEffect (() => {
+    const handelClickOutside = (event) => {
+
+if (menuRef.current && !menuRef.current.contains(event.target)){
+  setMenuOpen(false);
+}
+    }
+    document.addEventListener("mousedown", handelClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handelClickOutside)
+    }
+  }, [])
 
   useEffect(() => {
     if (location.pathname === "/search") {
@@ -135,9 +150,11 @@ const NavComponent = () => {
           </IconButton>
           {menuOpen && (
             <Box
+            ref={menuRef}
               sx={{
-                position: "fixed",
-                top: 84,
+               
+                position: "absolute",
+                top: 85,
                 right: 0,
                 width: { sm: 340, xs: 200 },
                 height: 260,
