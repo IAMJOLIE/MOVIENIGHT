@@ -44,7 +44,7 @@ const Home = () => {
       }}
     >
         
-      <Typography variant="h1" sx={{ mt: 8, mb: 2, animation: `${fadeInScale} 1s ease forwards` }}>Welcome to MovieNight</Typography>
+      <Typography variant="h2" sx={{ mt: 8, mb: 2, animation: `${fadeInScale} 1s ease forwards` }}>Welcome to MovieNight</Typography>
 
       <Box sx={{ opacity: 0, transform: 'translateY(20px)', animation: `${fadeInScale} 1.5s ease forwards`, mb: 4 }}>
         <Typography variant="h4">Our Collection</Typography>
