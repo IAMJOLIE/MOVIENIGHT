@@ -24,6 +24,9 @@ const MyList = () => {
     }));
   };
 
+
+
+
   return (
     <Box
       py={4}
@@ -57,18 +60,19 @@ const MyList = () => {
           <Box
             key={movie.imdbID}
             onMouseLeave={() => handleMouseLeave(movie.imdbID)}
+            
             sx={{
               my: 1,
               mx: 2,
               py: 1,
               px: 2,
-              
+            
               
               backgroundColor: "#1b1b1b",
               width: 310,
               display: "flex",
               flexDirection: "column",
-           
+              
               position: "relative",
               transition: "all 0.3s ease, box-shadow 0.3s ease",
 
@@ -81,18 +85,13 @@ const MyList = () => {
 
                 boxShadow: "0px 4px 20px  rgba(0, 0, 0, 0.9)",
                 width: 300,
-                height: 340,
+               
                
 
                 zIndex: 1000,
               },
 
-              "&:hover .img ": {
-                height: 200,
-              },
-              "&:hover .No-img ": {
-                height: 200,
-              },
+             
             }}
           >
             {movie.Poster && movie.Poster !== "N/A" ? (
@@ -186,11 +185,11 @@ const MyList = () => {
                   justifyContent: "flex-start",
                   alignItems: "flex-start",
                   position: "absolute",
-                  top: "89%",
+                  top: "100%",
                   flexDirection: "column",
                   width: "100%",
                   px: 2,
-
+                 
                   backgroundColor: "#1b1b1b",
                   height: 170,
                   left: 0,
