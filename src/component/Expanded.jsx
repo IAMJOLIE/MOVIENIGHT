@@ -87,7 +87,7 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
       
 
       
-        <Box  sx={{position: 'absolute', top: {sm: '40%', xs: '37%'}, paddingX: {md: 5, sm: 2, xs: 1}, display: 'flex', gap : {md: 5, sm: 2, xs: 1}, color: 'text.secondary'}}>
+        <Box  sx={{position: 'absolute', top: {sm: '40%', xs: '36%'}, paddingX: {md: 5, sm: 2, xs: 1}, display: 'flex', gap : {md: 5, sm: 2, xs: 1}, color: 'text.secondary'}}>
           <IconButton   onClick={handleToggleMyList}
            >
             {isInMyList(m.imdbID) ? <CancelIcon  sx={{ fontSize: {sm: 50, xs: 30}, color: "text.primary" }}/> :             < AddCircleOutlinedIcon  sx={{ fontSize: {sm: 50, xs: 30}, color: "text.primary" }}/> 
@@ -106,7 +106,7 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
 
         {!showLikeDislike && !selectedFeedback && (
           <IconButton>
-            <ThumbUpIcon sx={{ fontSize: {sm: 50, xs: 30}, color: "text.primary" }} />
+            <ThumbsUpDownOutlinedIcon sx={{ fontSize: {sm: 60, xs: 40}, color: "text.primary" }} />
           </IconButton>
         )}
 
@@ -124,10 +124,10 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
             }}
           >
             <IconButton onClick={() => handleFeedback("like")}>
-              <ThumbUpOutlinedIcon sx={{ fontSize: 50, color: selectedFeedback === "like" ? "text.primary" : 'text.secondary' }} />
+              <ThumbUpOutlinedIcon sx={{ fontSize: {xs: 35, sm: 50, md: 50}, color: selectedFeedback === "like" ? "text.primary" : "text.primary" }} />
             </IconButton>
             <IconButton onClick={() => handleFeedback("dislike")}>
-              <ThumbDownOutlinedIcon sx={{ fontSize: 50, color: selectedFeedback === "dislike" ? "text.primary" : 'text.secondary' }} />
+              <ThumbDownOutlinedIcon sx={{ fontSize: {xs: 35, sm: 50, md: 50}, color: selectedFeedback === "dislike" ? "text.primary" : "text.primary" }} />
             </IconButton>
           </Box>
         )}
@@ -135,12 +135,12 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
       
         {selectedFeedback === "like" && (
           <IconButton>
-            <ThumbUpIcon sx={{ fontSize: 50, color: "text.primary" }} />
+            <ThumbUpIcon sx={{ fontSize: {xs: 35, sm: 50, md: 50}, color: "text.primary" }} />
           </IconButton>
         )}
         {selectedFeedback === "dislike" && (
           <IconButton>
-            <ThumbDownIcon sx={{ fontSize: 50, color: "text.primary" }} />
+            <ThumbDownIcon sx={{ fontSize: {xs: 35, sm: 50, md: 50}, color: "text.primary" }} />
           </IconButton>
         )}
 

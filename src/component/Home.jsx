@@ -272,7 +272,7 @@ const Home = () => {
       
 
 <Box sx={{ width: '100%', paddingX: 5, mt: 4 }}>
-  <Typography variant="h3" sx={{ fontSize: 30 }}>Top 10 movies</Typography>
+  <Typography variant="h3" sx={{ fontSize: 30 }}>Top 10 TV shows </Typography>
 </Box>
 
 <Box sx={{ position: "relative", '&:hover .scroll-button': { opacity: 1 } }}>

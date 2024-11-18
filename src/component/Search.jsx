@@ -59,6 +59,8 @@ const Search = ({ isOpen, setSearchOpen }) => {
 useEffect(() => {
   if (location.pathname !== "/serach-result")
   setMovie([]);
+setNoMoviesFound(false)
+
 }, [location.pathname, setMovie])
 
 
@@ -73,7 +75,7 @@ useEffect(() => {
                 height: 50,
                
                 position: "absolute",
-                top: { md: 20, lg: 20, sm: 20, xs: 150 },
+                top: { md: 20, lg: 20, sm: 20, xs: 140 },
                 right: { md: 300, sm: 100, xs: "15%" },
 
                 display: isOpen ? "flex" : "none",
@@ -101,7 +103,13 @@ useEffect(() => {
           </Box>
         )}
       </Box>
-                 
+      {noMoviesFound ?  (
+          <Box   sx={{px: 2, py: 1, mt: {xs: 11, sm: 0, md: 0, lg: 0}}}>
+          <Typography variant="h5" color="text.secondary">
+            No movies or TV shows found for  "{searchValue}"
+          </Typography>
+        </Box>
+        ) : (          
       <Box
         sx={{
           display: "flex",
@@ -115,14 +123,8 @@ useEffect(() => {
         }}
       >
 
-        {noMoviesFound ?  (
-          <Box sx={{ mt: 3 }}>
-          <Typography variant="h5" color="text.secondary">
-            Inga filmer eller serier hittades för "{searchValue}"
-          </Typography>
-        </Box>
-        ) : (
-          movie.length > 0 && (
+    
+        {  movie.length > 0 && (
             <List
               sx={{
                 display: "flex",
@@ -145,11 +147,12 @@ useEffect(() => {
                 <ListMovie key={movie.imdbID} movie={movie}  isLoading={isLoading}/>
               ))}
             </List>
-          )
+          )}
+          </Box>
         )}
         
        
-      </Box>
+      
     </Box>
   );
 };
