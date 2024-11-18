@@ -56,8 +56,8 @@ removeFromWatched(m.imdbID)
 
  
   return ( 
-    <Box sx={{ width: {lg: '60%', md: '70%', sm: '70%'},   transform: 'translate(-50%, -50%)',     top: {lg: '70%', md: '70%', sm: '70%', xs: '70%'}, bottom: '20%',
-    left: '50%', height: '80vh',
+    <Box sx={{ width: {lg: '70%', md: '70%', sm: '70%'},   transform: 'translate(-50%, -50%)',     top: '70%',
+    left: '50%',
  backgroundColor: '#1b1b1b', position: 'fixed',  zIndex: 10,   height: '900px', display: 'flex', overflowY: 'auto', paddingBottom: 40,
     flexDirection: 'column', justifyContent: 'space-between', gap: 0, alignItems: 'flex-start',
     scrollbarWidth: 'none',

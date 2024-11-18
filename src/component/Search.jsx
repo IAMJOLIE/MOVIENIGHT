@@ -1,4 +1,4 @@
-import { Box, List, InputBase, IconButton } from "@mui/material";
+import { Box, List, InputBase, IconButton, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import ListMovie from "./ListMovie";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -101,7 +101,7 @@ useEffect(() => {
           </Box>
         )}
       </Box>
-
+                 
       <Box
         sx={{
           display: "flex",
@@ -114,30 +114,41 @@ useEffect(() => {
         
         }}
       >
-        {movie.length > 0 && (
-          <List
-            sx={{
-              display: "flex",
-              justifyContent: 'center', 
-              alignItems: 'center',
-              width: "100%",
-              flexDirection: 'row', 
-              flexWrap: 'wrap',
-              overflowY: 'scroll',
-             gap: 5,
-            
 
-              backgroundColor: "#121212",
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
-            }}
-          >
-            {movie.map((movie) => (
-              <ListMovie key={movie.imdbID} movie={movie}  isLoading={isLoading}/>
-            ))}
-          </List>
+        {noMoviesFound ?  (
+          <Box sx={{ mt: 3 }}>
+          <Typography variant="h5" color="text.secondary">
+            Inga filmer eller serier hittades för "{searchValue}"
+          </Typography>
+        </Box>
+        ) : (
+          movie.length > 0 && (
+            <List
+              sx={{
+                display: "flex",
+                justifyContent: 'center', 
+                alignItems: 'center',
+                width: "100%",
+                flexDirection: 'row', 
+                flexWrap: 'wrap',
+                overflowY: 'scroll',
+               gap: 5,
+              
+  
+                backgroundColor: "#121212",
+                '&::-webkit-scrollbar': {
+                  display: 'none',
+                },
+              }}
+            >
+              {movie.map((movie) => (
+                <ListMovie key={movie.imdbID} movie={movie}  isLoading={isLoading}/>
+              ))}
+            </List>
+          )
         )}
+        
+       
       </Box>
     </Box>
   );
