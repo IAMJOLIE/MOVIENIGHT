@@ -1,9 +1,10 @@
 import { Box, List, InputBase, IconButton } from "@mui/material";
 import { useState, useEffect } from "react";
 import ListMovie from "./ListMovie";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { keyframes } from "@emotion/react";
 import SearchIcon from "@mui/icons-material/Search";
+import { useMovie } from "./ConText/MovieContext";
 
 const expandWidth = keyframes`
   0% { transform: scaleX(0); }
@@ -11,12 +12,13 @@ const expandWidth = keyframes`
 `;
 
 const Search = ({ isOpen, setSearchOpen }) => {
-  const [movies, setMovies] = useState([]);
+  const {setMovie, movie} = useMovie()
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [noMoviesFound, setNoMoviesFound] = useState(false);
   const [error, setError] = useState(""); 
   const location = useLocation();
+  const nav = useNavigate()
 
 
   useEffect(() => {
@@ -25,48 +27,40 @@ const Search = ({ isOpen, setSearchOpen }) => {
             console.log("API Key:", import.meta.env.VITE_API_KEY);
             setIsLoading(true);
             setNoMoviesFound(false);
-            setError("");
+           
 
             const apiKey = import.meta.env.VITE_API_KEY;
             const apiUrl = `https://www.omdbapi.com/?s=${searchValue}&apikey=${apiKey}`;
 
             try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                if (data.Error) {
-                    throw new Error(data.Error);
-                }
-                if (data.Search) {
-                    setMovies(data.Search);
-                } else {
-                    setMovies([]);
-                    setNoMoviesFound(true);
-                }
-
-              } catch (error) {
-                setError(error.message); // Sätter ett användbart felmeddelande
-                console.error("Error fetching movies:", error); // Loggar felet för utvecklingsändamål
+              const response = await fetch(apiUrl);
+              const data = await response.json();
+              
+     
+              if (data.Search) {
+                setMovie(data.Search);
+                nav("/search-result", { state: { movies: data.Search } });
+              } else {
+                setMovie([]);
+                setNoMoviesFound(true);
+              }
+            } catch (error) {
+              setError(error.message);
+              console.error("Error fetching movies:", error);
             } finally {
-                setIsLoading(false); // Stänger av laddningsindikatorn när anropet är klart
+              setIsLoading(false);
             }
         }
     };
 
     fetchData();
-}, [searchValue]);
+}, [searchValue, nav]);
 
+useEffect(() => {
+  if (location.pathname !== "/serach-result")
+  setMovie([]);
+}, [location.pathname, setMovie])
 
-
-  useEffect(() => {
-    if (location.pathname !== "/search") {
-      setSearchOpen(false);
-      setMovies([]);
-      setSearchValue("");
-    }
-  }, [location.pathname, setSearchOpen]);
 
   return (
     <Box>
@@ -79,7 +73,7 @@ const Search = ({ isOpen, setSearchOpen }) => {
                 height: 50,
                
                 position: "absolute",
-                top: { md: 20, lg: 20, sm: 20, xs: 160 },
+                top: { md: 20, lg: 20, sm: 20, xs: 150 },
                 right: { md: 300, sm: 100, xs: "15%" },
 
                 display: isOpen ? "flex" : "none",
@@ -111,42 +105,35 @@ const Search = ({ isOpen, setSearchOpen }) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex_start",
-          alignItems: "center",
-         
-          mt: { sm: 0, xs: 15 },
-          height: { sm: "80vh", xs: "0" },
+          justifyContent: 'center', 
+          alignItems: 'center',
+          width: "100%",
+      
+         gap: 3,
+         mt:   10
+        
         }}
       >
-        {movies.length > 0 && (
+        {movie.length > 0 && (
           <List
             sx={{
-              marginBottom: { xs: 10, sm: 0 },
               display: "flex",
-              flexDirection: { sm: "row", xs: "column" },
-              overflowY: { xs: "auto", sm: "hidden" },
-              overflowX: { sm: "auto", xs: "hidden" },
-              alignItems: {xs: "center", sm: 'flex-start'},
-              
-
-              gap: 6,
+              justifyContent: 'center', 
+              alignItems: 'center',
               width: "100%",
+              flexDirection: 'row', 
+              flexWrap: 'wrap',
+              overflowY: 'scroll',
+             gap: 5,
+            
 
-              backgroundColor: "#000000",
-              "&::-webkit-scrollbar": {
-                width: "1px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "#000000",
-                borderRadius: "1px",
-              },
-              "&::-webkit-scrollbar-track": {
-                backgroundColor: "Black",
-                borderRadius: "2px",
+              backgroundColor: "#121212",
+              '&::-webkit-scrollbar': {
+                display: 'none',
               },
             }}
           >
-            {movies.map((movie) => (
+            {movie.map((movie) => (
               <ListMovie key={movie.imdbID} movie={movie}  isLoading={isLoading}/>
             ))}
           </List>

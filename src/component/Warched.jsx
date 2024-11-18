@@ -3,14 +3,16 @@ import { useMovie } from "./ConText/MovieContext";
 import { useState } from "react";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
+import MovieIcon from "@mui/icons-material/Movie"; // Import an icon for visual enhancement
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useNavigate } from "react-router";
 
 const Watched = () => {
   const { watched, removeFromWatched, addToMyList } = useMovie();
   const [showText, setShowText] = useState({});
-
+const nav = useNavigate();
   const iconButtonClick = (imdbID) => {
     setShowText((prev) => ({
       ...prev,
@@ -40,7 +42,42 @@ const Watched = () => {
     <Box sx={{ color: "text.primary", px: 3 }}>
       <h1> Watched List </h1>
     </Box>
-
+    {watched.length === 0 ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            p: 4,
+            maxWidth: 600,
+            mx: "auto",
+          }}
+        >
+          <MovieIcon sx={{ fontSize: 80, color: "text.secondary", mb: 2 }} />
+          <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
+            No Movies Watched Yet
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 3, px: 2 }}>
+            Keep track of movies you’ve watched by adding them to your watched list. 
+            Start exploring and see what catches your eye!
+          </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => nav("/")}
+            sx={{
+              px: 4,
+              py: 1,
+              borderRadius: "20px",
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+          >
+            Browse Movies
+          </Button>
+        </Box>
+      ) : (
     <Box
       sx={{
         display: "flex",
@@ -62,8 +99,7 @@ const Watched = () => {
        sx={{
          my: 1,
          mx: 2,
-         py: 1,
-         px: 2,
+        
          
          
          backgroundColor: "#1b1b1b",
@@ -96,7 +132,7 @@ const Watched = () => {
           <img
           className="img"
           height={"280px"}
-          style={{ borderRadius: 8 }}
+          style={{ borderRadius: 8 ,filter: "brightness(0.5)" }}
           src={movie.Poster}
           alt="Movie Poster"
         />
@@ -126,6 +162,8 @@ const Watched = () => {
             alignItems: "center",
             mt: 1,
             gap: 1,
+            px: 2,
+            py: 1
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -215,13 +253,13 @@ const Watched = () => {
                   />
                   <Box sx={{ display: "flex" }}>
                     <IconButton
-                      sx={{ color: "primary.light"  }}
+                      sx={{ color: "text.primary", }}
                       onClick={() => removeFromWatched(movie.imdbID)}
                     >
-                      <CancelIcon sx={{fontSize: 30}}  />
+                      <VisibilityOffIcon sx={{fontSize: 30}}  />
                     </IconButton>
                     <IconButton
-                      sx={{ color: "primary.light"  }}
+                      sx={{ color: "text.primary",  }}
                       onClick={() => {
                         removeFromWatched(movie.imdbID), addToMyList(movie);
                       }}
@@ -237,6 +275,7 @@ const Watched = () => {
           </Box>
         ))}
       </Box>
+      )}
     </Box>
   );
 };

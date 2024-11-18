@@ -1,5 +1,7 @@
 import { TroubleshootRounded } from "@mui/icons-material";
 import React, { createContext, useContext, useState } from "react";
+import { popularMovies } from "../../utils/fakeData";
+
 
 const MovieContext = createContext();
 
@@ -7,14 +9,15 @@ export const useMovie = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
   const [myList, setMyList] = useState([]);
- 
   const [watched, setWatched] = useState([]);
+  const [movie, setMovie] = useState([])
+
+ 
 
   const addToMyList = (movie) => {
-   
+    console.log("Adding to myList:", movie); // För att se om alla nycklar är inkluderade
     if (!myList.find((m) => m.imdbID === movie.imdbID)) {
       setMyList((prevList) => [...prevList, movie]);
-   
     }
   };
 
@@ -56,6 +59,8 @@ export const MovieProvider = ({ children }) => {
         removeFromWatched,
         isInWatched,
         isInMyList,
+        movie, 
+        setMovie
         
       }}
     >

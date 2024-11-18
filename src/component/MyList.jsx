@@ -5,9 +5,11 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CancelIcon from "@mui/icons-material/Cancel";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import MovieIcon from "@mui/icons-material/Movie";
 
 const MyList = () => {
-  const { myList, removeFromMyList, addToWatched,  } = useMovie();
+  const { myList, removeFromMyList, addToWatched, isInMyList  } = useMovie();
   const [showText, setShowText] = useState({});
 
   const iconButtonClick = (imdbID) => {
@@ -25,8 +27,6 @@ const MyList = () => {
   };
 
 
-
-
   return (
     <Box
       py={4}
@@ -42,8 +42,35 @@ const MyList = () => {
       <Box sx={{ color: "text.primary", px: 3 }}>
         <h1> My List </h1>
       </Box>
-
-      <Box
+      {myList.length === 0 ?(
+         <Box
+         sx={{
+          mt: 1,
+           display: "flex",
+           flexDirection: "column",
+           alignItems: "center",
+           justifyContent: "center",
+           height: "60vh",
+           textAlign: "center",
+           backgroundColor: "#1b1b1b",
+           borderRadius: 2,
+           padding: 4,
+           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+         }}
+       >
+         <MovieIcon sx={{ fontSize: 80, color: "text.secondary", mb: 2 }} />
+         <Typography variant="h6" color="text.secondary">
+           Your list is currently empty.
+         </Typography>
+         <Typography variant="body1" color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+           Start adding your favorite movies and series here!
+         </Typography>
+         <IconButton sx={{ color: "text.primary", fontSize: 40 }}>
+           <PlaylistAddIcon fontSize="large" />
+         </IconButton>
+       </Box>
+      ): (
+<Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
@@ -55,8 +82,12 @@ const MyList = () => {
           justifyContent: {xs: "center", sm: 'center', md: 'flex-start'},
          
         }}
+        
       >
         {myList.map((movie) => (
+
+          
+          
           <Box
             key={movie.imdbID}
             onMouseLeave={() => handleMouseLeave(movie.imdbID)}
@@ -64,8 +95,8 @@ const MyList = () => {
             sx={{
               my: 1,
               mx: 2,
-              py: 1,
-              px: 2,
+             
+            
             
               
               backgroundColor: "#1b1b1b",
@@ -98,7 +129,7 @@ const MyList = () => {
               <img
               className="img"
               height={"280px"}
-              style={{ borderRadius: 8 }}
+              style={{ borderRadius: 8, filter: "brightness(0.5)"}}
               src={movie.Poster}
               alt="Movie Poster"
             />
@@ -128,10 +159,11 @@ const MyList = () => {
                 alignItems: "center",
                 mt: 1,
                 gap: 1,
-               
+                px: 2,
+                py: 1
               }}
             >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", flexDirection: "column",  }}>
                 <Typography sx={{ color: "text.primary" }}>
                   {movie.Title}
                 </Typography>
@@ -217,15 +249,15 @@ const MyList = () => {
                   <Divider
                     sx={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
                   />
-                  <Box sx={{ display: "flex", gap: 2 }}>
+                  <Box sx={{ display: "flex", gap: 2, }}>
                     <IconButton
-                      sx={{ color: "primary.light" }}
+                      sx={{ color:"text.primary"  }}
                       onClick={() => removeFromMyList(movie.imdbID)}
                     >
                       <CancelIcon  sx={{fontSize: 27}}/>
                     </IconButton>
                     <IconButton 
-                      sx={{ color: "primary.light",  }}
+                      sx={{ color: "text.primary"  }}
                       onClick={() => {
                         removeFromMyList(movie.imdbID), addToWatched(movie);
                       }}
@@ -241,6 +273,8 @@ const MyList = () => {
           </Box>
         ))}
       </Box>
+      )}
+      
     </Box>
   );
 };

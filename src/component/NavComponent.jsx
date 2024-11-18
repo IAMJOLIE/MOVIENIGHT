@@ -16,7 +16,7 @@ import MoodRoundedIcon from "@mui/icons-material/MoodRounded";
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import { buttonStyleM } from "../until/style";
+import { buttonStyleM } from "../utils/style";
 import Search from "./Search";
 
 const NavComponent = () => {
@@ -27,9 +27,9 @@ const NavComponent = () => {
 
   const nav = useNavigate();
 
-  const handleSearchClick = () => {
-    nav("/search");
-    setSearchOpen(true);
+  const handleSearchClick = (path) => {
+    setTimeout(() => setSearchOpen(true), 50); // Short delay to prevent timing issues
+    nav(path);
   };
 
   const handleMenuClick = (path) => {
@@ -52,18 +52,21 @@ if (menuRef.current && !menuRef.current.contains(event.target)){
   }, [])
 
   useEffect(() => {
-    if (location.pathname === "/search") {
+    if (location.pathname === "/search-result") {
       setSearchOpen(true);
     } else {
+
       setSearchOpen(false);
     }
   }, [location.pathname]);
 
   return (
     <Box
+
       px={3}
       py={1}
       sx={{
+       
         width: "100%",
         position: "relative",
    
@@ -165,10 +168,10 @@ if (menuRef.current && !menuRef.current.contains(event.target)){
               }}
             >
               <MenuList>
-                <MenuItem
+                <MenuItem 
                   onClick={() => {
-                    handleSearchClick();
-                    handleMenuClick("/search");
+                    handleSearchClick('/search');
+                    handleMenuClick('/search');
                   }}
                 >
                   <ListItemIcon>
