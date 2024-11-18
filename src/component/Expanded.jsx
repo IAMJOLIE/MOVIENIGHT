@@ -25,16 +25,13 @@ const {  addToMyList,
   removeFromMyList,
   isInWatched,
   isInMyList, } = useMovie();
-const handleMouseEnter = () => {
-  setShowLikeDisLike(true)
-}
-
-const handleMouseLeave= () => {
-  setShowLikeDisLike(false)
-}
+  const handleMouseEnter = () => setShowLikeDisLike(true);
+  const handleMouseLeave = () => setShowLikeDisLike(false);
 
 const handleFeedback = (feedback) => {
   setSelectedFeedback(feedback)
+  setShowLikeDisLike(false)
+
 }
 const handleToggleMyList = () => {
   if (isInMyList(m.imdbID)) {
@@ -119,8 +116,9 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
             sx={{
               display: 'flex',
               position: 'absolute',
-              left: "50px",
-              bottom: 0,
+           
+           
+              bottom: 60,
               gap: 1,
               transform: "scale(1.1)"
             }}
@@ -129,7 +127,7 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
               <ThumbUpOutlinedIcon sx={{ fontSize: 50, color: selectedFeedback === "like" ? "text.primary" : 'text.secondary' }} />
             </IconButton>
             <IconButton onClick={() => handleFeedback("dislike")}>
-              <ThumbDownOutlinedIcon sx={{ fontSize: 50, color: selectedFeedback === "dislike" ? "red" : 'text.secondary' }} />
+              <ThumbDownOutlinedIcon sx={{ fontSize: 50, color: selectedFeedback === "dislike" ? "text.primary" : 'text.secondary' }} />
             </IconButton>
           </Box>
         )}
@@ -142,7 +140,7 @@ backgroundColor: 'rgba(0, 0, 0, 0.2)'
         )}
         {selectedFeedback === "dislike" && (
           <IconButton>
-            <ThumbDownIcon sx={{ fontSize: 50, color: "red" }} />
+            <ThumbDownIcon sx={{ fontSize: 50, color: "text.primary" }} />
           </IconButton>
         )}
 
