@@ -39,10 +39,12 @@ const Search = ({ isOpen, setSearchOpen }) => {
      
               if (data.Search) {
                 setMovie(data.Search);
+               
                 nav("/search-result", { state: { movies: data.Search } });
               } else {
                 setMovie([]);
                 setNoMoviesFound(true);
+               
               }
             } catch (error) {
               setError(error.message);
@@ -58,7 +60,7 @@ const Search = ({ isOpen, setSearchOpen }) => {
 
 useEffect(() => {
   if (location.pathname !== "/serach-result")
-  setMovie([]);
+
 setNoMoviesFound(false)
 
 }, [location.pathname, setMovie])
@@ -103,13 +105,13 @@ setNoMoviesFound(false)
           </Box>
         )}
       </Box>
-      {noMoviesFound ?  (
+      { location.pathname === "/search-result" && noMoviesFound &&  (
           <Box   sx={{px: 2, py: 1, mt: {xs: 11, sm: 0, md: 0, lg: 0}}}>
           <Typography variant="h5" color="text.secondary">
             No movies or TV shows found for  "{searchValue}"
           </Typography>
-        </Box>
-        ) : (          
+        </Box>)}
+        
       <Box
         sx={{
           display: "flex",
@@ -149,7 +151,7 @@ setNoMoviesFound(false)
             </List>
           )}
           </Box>
-        )}
+        
         
        
       
