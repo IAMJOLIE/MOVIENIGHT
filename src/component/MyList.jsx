@@ -139,7 +139,7 @@ const MyList = () => {
                 backgroundImage: "linear-gradient(to right, black, grey)",
                 
                height: 280,
-               borderRadius: 8,
+           
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

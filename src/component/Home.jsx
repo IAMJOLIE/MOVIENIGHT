@@ -4,7 +4,7 @@ import { popularMovies, popularSeries } from "../utils/fakeData";
 import { useEffect, useRef, useState } from "react";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { buttonStyleM } from "../utils/style";
+
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
@@ -88,21 +88,66 @@ const Home = () => {
     >
 
 
-  <Box>
+  <Box sx={{width: '100%', maxWidth: '1300px', backgroundColor: 'red', position: 'relative', }}>
 
-<Box  className="rollandeimg" sx={{  width: '100%', height: 500, objectFit: 'cover',     animation: "fade 2s ease-in-out",
+  
+
+<Box  className="rollandeimg" sx={{  width: {md: '300px', sm: 200, xs: '100%'}, height:{md: '300px', sm: 200, xs: 400}, objectFit: 'cover',     animation: "fade 2s ease-in-out",
           position: "absolute",
-          top: 0,
-          left: 0,
-          filter: "brightness(0.4) blur(2px)", 
-         }}>
-        {currentPoster && currentPoster.Poster &&(
+          top: {md:50, sm: 90, xs: 0},
+          right: {md: 150, sm: 90, xs: 0, lg: 200},
+          zIndex: 2,
+          filter: { xs: "brightness(0.4) blur(2px)", sm: "none", md: "none" }, 
 
-          <img src={currentPoster.Poster} alt={currentPoster.Title} style={{width: '100%', height: 500}} />
+
+         }}>
+{isLoading ? (
+  <Skeleton  sx={{width: '100%', height: '100%',  boxShadow: '4px 10px 30px 10px rgba(0, 0, 0,  0.9)'}}/>
+) : (
+      
+        currentPoster && currentPoster.Poster &&(
+
+          <img src={currentPoster.Poster} alt={currentPoster.Title} style={{width: '100%', height: '100%',  boxShadow: '4px 10px 30px 10px rgba(0, 0, 0,  0.9)'}} />
+        )
         )}
 
       </Box>
-      <Box  sx={{position: 'absolute', top: '5%', left: '10%', }}> 
+
+
+
+
+          <Box sx={{  width: {md: '300px', sm: 200}, height:{md: '300px', sm: 200},
+  position: "absolute",
+  top: {md:20, sm: 40},
+  right: {md: 50, sm: 30, lg: 100}, 
+  boxShadow: '4px 0px 30px 10px rgba(0, 0, 0,  0.9)', display: {md: 'grid', sm: 'grid', xs: 'none'},
+  gridTemplateColumns: 'repeat(7, 1fr)', 
+  gridTemplateRows: 'repeat(1, 1fr)',    overflow: 'hidden'
+  }}>
+    {isLoading ? (
+   <Skeleton/>
+  ) : (
+    popularMovies.slice(0, 10).map((movie) => (
+      <Box className="andra box" sx={{    backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      width: '100%', height: '100%',
+      backgroundImage: `url(${movie?.Poster})`,
+     
+    
+           
+    
+           }} >
+    
+          </Box>
+         ))
+  )}
+   
+     </Box>
+     
+ 
+      
+   
+      <Box  sx={{position: 'absolute',  top: {md: 100, xs: 60}, left: {lg: 50, md : 70, sm: 30, xs: 20},  width: {md: 380, sm: 240, xs: 360 ,lg : 600},  zIndex: {xs: 4, sm: 0 }}}> 
 
     <Typography sx={{fontSize: 200}} > <h1 className="customFont">MovieNight</h1></Typography>
 
@@ -111,14 +156,14 @@ const Home = () => {
   <Skeleton variant="text" sx={{  width: '300', height: 100}} />
 ) : (
   currentPoster && currentPoster.Title && (
-    <Typography variant="h3" sx={{color: 'text.secondary'}}>{currentPoster.Title}</Typography>
+    <Typography variant="h3" sx={{color: 'text.secondary', wordBreak: 'break-word',  width: '100%', fontSize: {sm: 30, md: 40, xs: 25  }}}>{currentPoster.Title}</Typography>
   )
  )}
     {isLoading ? (
   <Skeleton variant="text" sx={{  width: '400', height: 50}} />
 ) : (
   currentPoster && currentPoster.Genre && (
-    <Typography variant="h6"sx={{color: 'text.secondary'}}>{currentPoster.Genre}</Typography>
+    <Typography variant="h6"sx={{color: 'text.secondary', fontSize: 20}}>{currentPoster.Genre}</Typography>
   )
 )}
     
@@ -129,11 +174,11 @@ const Home = () => {
 
      
      
-    <Box sx={{ width: '100%', paddingX: 5, mt: 45, zIndex: 1 }}>
+    <Box sx={{ width: '100%', paddingX: 5, mt: 45, zIndex: 2 }}>
         <Typography variant="h3" sx={{ fontSize: 30 }}>Top 10 movies</Typography>
       </Box>
 
-      <Box sx={{ position: "relative", '&:hover .scroll-button': { opacity: 1 } }}>
+      <Box sx={{ position: "relative", '&:hover .scroll-button': { opacity: 1 }, zIndex: 2 }}>
       <Box className="scroll-button"
           sx={{
             opacity: 0,
@@ -172,7 +217,8 @@ const Home = () => {
             pointerEvents: "auto",
             paddingTop: 3, 
             mt: 2,
-            paddingX: {sm: 2, xs: 4}
+            paddingX: {sm: 2, xs: 4}, 
+            zIndex: 3
           }}
         > 
        

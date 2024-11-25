@@ -45,12 +45,14 @@ const Search = ({ isOpen, setSearchOpen }) => {
                 setMovie([]);
                 setNoMoviesFound(true);
                
+               
               }
             } catch (error) {
               setError(error.message);
               console.error("Error fetching movies:", error);
             } finally {
               setIsLoading(false);
+           
             }
         }
     };
@@ -62,6 +64,7 @@ useEffect(() => {
   if (location.pathname !== "/serach-result")
 
 setNoMoviesFound(false)
+setMovie([])
 
 }, [location.pathname, setMovie])
 
